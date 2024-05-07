@@ -2,6 +2,7 @@ plugins {
     kotlin("multiplatform")
     id("com.android.library")
     id("org.jetbrains.compose")
+    kotlin("plugin.serialization") version "1.9.22"
 }
 
 kotlin {
@@ -21,6 +22,16 @@ kotlin {
     }
 
     sourceSets {
+        val ktor_version: String by project
+        val coroutines_version: String by project
+
+        val commonTest by getting {
+            dependencies {
+                implementation(kotlin("test-common"))
+                implementation(kotlin("test-junit"))
+            }
+        }
+
         val commonMain by getting {
             dependencies {
                 implementation(compose.runtime)
@@ -28,6 +39,11 @@ kotlin {
                 implementation(compose.material)
                 @OptIn(org.jetbrains.compose.ExperimentalComposeLibrary::class)
                 implementation(compose.components.resources)
+                implementation("io.ktor:ktor-client-core:$ktor_version")
+                implementation("io.ktor:ktor-client-cio:$ktor_version")
+                implementation("io.ktor:ktor-serialization-kotlinx-json:$ktor_version")
+                implementation("io.ktor:ktor-client-content-negotiation:$ktor_version")
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines_version")
             }
         }
         val androidMain by getting {
