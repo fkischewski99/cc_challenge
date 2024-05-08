@@ -1,8 +1,10 @@
 plugins {
+
     kotlin("multiplatform")
     id("com.android.library")
     id("org.jetbrains.compose")
     kotlin("plugin.serialization") version "1.9.22"
+    id("io.realm.kotlin") version "1.11.1"
 }
 
 kotlin {
@@ -24,6 +26,7 @@ kotlin {
     sourceSets {
         val ktor_version: String by project
         val coroutines_version: String by project
+        val realm_version: String by project
 
         val commonTest by getting {
             dependencies {
@@ -44,6 +47,8 @@ kotlin {
                 implementation("io.ktor:ktor-serialization-kotlinx-json:$ktor_version")
                 implementation("io.ktor:ktor-client-content-negotiation:$ktor_version")
                 implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines_version")
+                //DB
+                implementation("io.realm.kotlin:library-base:$realm_version")
             }
         }
         val androidMain by getting {
